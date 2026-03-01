@@ -1,51 +1,77 @@
-# Airline Delay - Data Pipeline
+# Airline Delay Data Analysis - Task
 
-Dataset: [Airline Delay Cause - Kaggle](https://www.kaggle.com/datasets/sriharshaeedala/airline-delay/data)
+##  Project Overview
+This project builds a data pipeline and visual analysis on the [Airline Delay Dataset](https://www.kaggle.com/datasets/sriharshaeedala/airline-delay/data) to find patterns and causes behind flight delays across carriers, airports, and months.
 
 ---
 
-## What this project does
+##  Task 1: Data Pipeline (ETL)
 
-A simple ETL pipeline on the airline delay dataset followed by some visualizations to understand what actually causes flight delays.
+### 1️ Extract
+- Loaded raw data from `Airline_Delay_Cause.csv` using pandas
 
-## Pipeline steps
+### 2️ Transform
+- Checked for duplicate rows — none found
+- Dropped rows with missing values (~240 rows out of 171k, so dropping was safe)
+- Created two new columns:
+  - `total_delay_minutes` = sum of all individual delay causes
+  - `on_time_rate` = (arr_flights - arr_del15) / arr_flights
 
-**Extract** - Loaded the raw CSV using pandas
+### 3️ Load
+- Saved the cleaned dataset as `airline_delay_cleaned.csv`
 
-**Transform** - Cleaned the data:
-- Checked for duplicates (found none)
-- Found ~240 null values across delay columns, dropped them since they were a small fraction of 171k rows
-- Added two new columns:
-  - `total_delay_minutes` - sum of all delay causes per row
-  - `on_time_rate` - percentage of flights that arrived on time
+---
 
-**Load** - Saved the cleaned data to `airline_delay_cleaned.csv`
+## 📊 Visualizations
 
-## Visualizations
+###  Correlation Heatmap
+Analyzed relationships between carrier delay, weather delay, NAS delay, late aircraft delay, on-time rate, and total arrival delay.
 
-1. **Correlation Heatmap** - shows how delay columns relate to each other
-2. **Distribution of Arrival Delays** - right-skewed, most routes have low delay but a few have very high
-3. **Distribution of On-Time Rate** - most routes are 80-85% on time
-4. **Total Delay Minutes by Cause** - late aircraft is the biggest cause, not weather
-5. **Average On-Time Rate by Month** - June, July and December are worst months
-6. **Top 10 Carriers by Average Delay** - larger carriers appear higher due to volume, not necessarily poor performance
+###  Histogram — Distribution of Arrival Delays
+Shows the spread of total arrival delay minutes per entry. Result: heavily right-skewed — most rows have low delay but a few are very high.
 
-## Key Insights
+###  Histogram — Distribution of On-Time Rate
+Shows what percentage of flights land on time per route. Most routes sit between 80–85% on time.
 
-- Late aircraft delays cause the most total delay minutes overall, not weather
-- On-time rates drop in summer (Jun-Jul) and December — September and October are the safest months to fly
-- Most routes are still reliable, with 80-85% on-time rate being the norm
-- Security delays are basically zero compared to other causes
+###  Bar Plot — Delay Cause Totals
+Compared total delay minutes across all 5 causes (carrier, weather, NAS, security, late aircraft) over all years combined.
 
-## Libraries used
+###  Line Plot — On-Time Rate by Month
+Tracked how on-time rates change across months to identify seasonal patterns.
 
+###  Bar Plot — Top 10 Carriers by Average Delay
+Shows which carriers have the highest average arrival delay per entry.
+
+---
+
+##  Data Insights
+
+**❓ Which delay cause is the biggest problem?**
+Late aircraft delay adds up to the most total delay minutes across all years — not weather. One late plane causes all its next flights to be late too (domino effect). Carrier delays come second.
+
+**❓ Is weather really the biggest cause?**
+No. The heatmap and bar chart both show late aircraft and carrier delays have a much bigger impact overall. Weather gets blamed more than it deserves.
+
+**❓ Do delays get worse in certain months?**
+Yes. On-time rates clearly drop in June, July, and December — summer thunderstorms and holiday travel are the main drivers. September and October are the most reliable months to fly.
+
+**❓ What is the most common passenger experience?**
+Most routes have an on-time rate of 80–85%, meaning roughly 1 in 5 or 6 flights gets delayed. The histogram also shows most entries have low total delay — it's the extreme cases pulling the average up.
+
+---
+
+## 📌 Conclusion
+The majority of flights still operate close to schedule. The bigger issue isn't weather — it's late aircraft cascading through the day and carrier-side inefficiencies. Seasonal demand in summer and December noticeably worsens on-time performance across the board.
+
+---
+
+## Libraries Used
 - pandas
 - numpy
 - seaborn
 - matplotlib
 
-## How to run
-
+## How to Run
 1. Download the dataset from Kaggle and place `Airline_Delay_Cause.csv` in the same folder
 2. Open `airline_delay_pipeline_pramish.ipynb`
 3. Run all cells
