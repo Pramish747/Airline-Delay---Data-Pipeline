@@ -60,7 +60,7 @@ Most routes have an on-time rate of 80–85%, meaning roughly 1 in 5 or 6 flight
 
 ---
 
-## 📌 Conclusion
+##  Conclusion
 The majority of flights still operate close to schedule. The bigger issue isn't weather — it's late aircraft cascading through the day and carrier-side inefficiencies. Seasonal demand in summer and December noticeably worsens on-time performance across the board.
 
 ---
